@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 var swiperInstance;
 
 function checkArrowsVisibility() {
