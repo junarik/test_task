@@ -1,0 +1,47 @@
+<div class="swiper product-swiper">
+  <div class="swiper-wrapper">
+    {% assign current_variant = product.selected_or_first_available_variant %}
+    {% assign variant_images = current_variant.metafields.custom.vairan_gallery %}
+
+    {% if variant_images and variant_images != blank %}
+      {% if variant_images.type == 'list.file_reference' %}
+        {% for image in variant_images.value %}
+          <div class="swiper-slide">
+            <img
+              src="{{ image | image_url: height: 600 }}"
+              style="height: 600px; width: 100%; object-fit: cover;"
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+              alt="{{ image.alt | escape }}"
+              loading="lazy"
+            >
+          </div>
+        {% endfor %}
+      {% elsif variant_images.type == 'file_reference' %}
+        <div class="swiper-slide">
+          <img
+            src="{{ variant_images | image_url: height: 600 }}"
+            style="height: 600px; width: 100%; object-fit: cover;"
+            width="{{ variant_images.width }}"
+            height="{{ variant_images.height }}"
+            alt="{{ variant_images.alt | escape }}"
+            loading="lazy"
+          >
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {% if block.settings.navigation_enabled_desktop %}
+    <div class="swiper-button-prev desktop-only"></div>
+    <div class="swiper-button-next desktop-only"></div>
+  {% endif %}
+</div>
+
+{% if block.settings.pagination_enabled %}
+  <div class="pagination-wrapper">
+    <div class="swiper-pagination">
+      <span class="swiper-pagination-current">1</span> / <span class="swiper-pagination-total">2</span>
+    </div>
+  </div>
+{% endif %}
